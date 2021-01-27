@@ -1,0 +1,82 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Timesheets{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <h1 style="text-align:center;">Timesheets</h1>
+        {% if timesheets %}
+          <hr class="intro-divider">
+          <div class="center">
+              <table class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th width="20%"> Week </th>
+                    <th width="20%"> View Status </th>
+                    <th width="20%"> Edit </th>
+                    <th width="20%"> Delete </th>
+                    <th width="20%"> Submit  </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for timesheet in timesheets %}
+                  <tr>
+                    <td> {{ timesheet.period }} </td>
+
+                    <td>
+                        <a href="{{ url_for('employee.view_timesheet', id=timesheet.id) }}">
+                          <i class="fa fa-camera-retro "></i> View
+                        </a>
+                    </td>
+                    <td>
+                      {% if timesheet.status=="Not Submitted" %}
+                        <a href="{{ url_for('employee.edit_timesheet', id=timesheet.id) }}">
+                          <i class="fa fa-pencil"></i> Edit
+                        </a>
+                      {% else %}
+                      {{"Submitted"}}
+                      {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('employee.delete_timesheet', id=timesheet.id) }}">
+                          <i class="fa fa-trash"></i> Delete
+                        </a>
+                    </td>
+                    <td>
+                      {% if timesheet.status=="Not Submitted" %}
+                          <a href="{{ url_for('employee.view_timesheet', id=timesheet.id) }}">
+                            <i class="fa fa-trash"></i> Submit
+                          </a>
+                      {% else %}
+                        {{ "Submitted" }}
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+         </div>
+        <div style="text-align: center">
+        {% else %}
+          <div style="text-align: center">
+            <h3> No timesheets have been added. </h3>
+            <hr class="intro-divider">
+        {% endif %}
+          <a href="{{ url_for('employee.add_timesheet') }}" class="btn btn-default btn-lg">
+            <i class="fa fa-plus"></i>
+            Add Timesheet
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,63 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_timesheet %}
+        Add Timesheet
+    {% else %}
+        Edit Timesheet
+    {% endif %}
+{% endblock %}
+{% block body %}
+<div class="content-section">
+    <div class="inner">
+        <br/>
+
+        <br/>
+        <h1 style="text-align:center;">Add timesheet for week - {{period}}</h1>
+        {% if form %}
+      <hr class="intro-divider">
+      <div class="center">
+        {{ utils.flashed_messages() }}
+
+        <form action="" method="post" name="form">
+          {{ form.hidden_tag() }}
+          <div>
+              <table class="table table-hover table-borderd ">
+                   <thead>
+                      <tr>
+                        <th width="20%"> Date </th>
+                        <th width="30%"> Workhours </th>
+                        <th width="50%"> Description </th>
+                      </tr>
+                   </thead>
+
+                   <tbody>
+                      {% for entry in form.sheets %}
+                        <tr>
+                            <td>{{ entry['date'] }}</td>
+                            <td>{{ entry['workhours'] }}</td>
+                            <td>{{ entry['description'] }}</td>
+                        </tr>
+                      {% endfor %}
+                   </tbody>
+              </table>
+          </div>
+
+          <div style="width:400px;">
+              <div style="float: left; width: 120px">
+                <input class="btn btn-primary" type="submit" name="save" value="Save">
+              </div>
+              <div style="float: right; width: 200px">
+                <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+              </div>
+          </div>
+        </form>
+        {% endif %}
+        <br/>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+

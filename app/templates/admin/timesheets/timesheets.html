@@ -1,0 +1,115 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %} Approve Timesheets {% endblock %}
+{% block body %}
+<div class="content-section">
+<br/>
+{{ utils.flashed_messages() }}
+<br/>
+  <h1 style="text-align:center;">Approve Timesheets</h1>
+  {% if timesheets %}
+    <div class="center">
+      <div>
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th width="10%"> Employee Id </th>
+              <th width="60%"> Week </th>
+              <th width="10%"> View </th>
+              <th width="10%"> Approve </th>
+              <th width="10%"> Delete </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for timesheet in timesheets %}
+            <tr data-toggle="collapse" data-target="#{{timesheet.id}}"  class="clickable">
+              <td> {{ timesheet.employee_id }} </td>
+              <td>
+                <a target="_blank" class="clickcolumn">
+                    <i class="fa fa-camera-retro "></i> {{ " "+timesheet.period }}
+                </a>
+              </td>
+              <td>
+                  <a href="{{ url_for('admin.view_timesheet', id=timesheet.id) }}">
+                    <i class="fa fa-camera-retro "></i> View
+                  </a>
+              </td>
+              <td>
+                {% if timesheet.status=="Submitted" %}
+                  <a href="{{ url_for('admin.approve_timesheet', id=timesheet.id, decision='approve') }}">
+                    <i class="fa fa-check"></i>  <span style="padding-right:20px"> All</span>
+                  </a>
+                  <a href="{{ url_for('admin.approve_timesheet', id=timesheet.id, decision='reject') }}">
+                    <i class="fa fa-times"></i>  All
+                  </a>
+                {% else %}
+                  {{timesheet.status}}
+                {% endif %}
+              </td>
+              <td>
+                <a href="{{ url_for('admin.delete_timesheet', id=timesheet.id) }}">
+                    <i class="fa fa-trash"></i>  Delete
+                  </a>
+              </td>
+            </tr>
+            <tr id="{{timesheet.id}}" class="no-border collapse">
+                <td></td>
+                <td>
+                  <div>
+                    <table class="table table-striped table-bordered">
+                      <thead>
+                          <tr>
+                            <th width="10%"> Date </th>
+                            <th width="20%"> Workhours </th>
+                            <th width="40%"> Description </th>
+                            <th width="30%"> Approve/Reject </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      {% for sheet in timesheet.sheets %}
+
+                        <tr>
+                          <td> {{ sheet.date }} </td>
+                          <td> {{ sheet.workhours }} </td>
+                          <td> {{ sheet.description }} </td>
+                          <td>
+                            {% if sheet.status=="Approved" %}
+                              {{"Approved"}}
+                            {% elif sheet.status=="Rejected" %}
+                              {{"Rejected"}}
+                            {% else %}
+                                <a href="{{ url_for('admin.approve_sheet', id=sheet.id, decision='approve') }}">
+                                  <i class="fa fa-check"></i><span style="padding-right:20px"></span>
+                                </a>
+                                <a href="{{ url_for('admin.approve_sheet', id=sheet.id, decision='reject') }}">
+                                  <i class="fa fa-times"></i>
+                                </a>
+                            {% endif %}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align: center">
+  {% else %}
+        <div style="text-align: center">
+          <h3> No timesheets Submitted. </h3>
+          <hr class="intro-divider">
+  {% endif %}
+
+        </div>
+      </div>
+   </div>
+</div>
+{% endblock %}
+
+
+
+
