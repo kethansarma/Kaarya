@@ -120,7 +120,7 @@ def add_timesheet():
                                form=form, title="Add Timesheet", period=period)
 
 
-@employee.route('/timesheets/view/<int:id>', methods=['GET', 'POST'])
+@employee.route('/timesheets/view/<int:id>', methods=['GET'])
 @login_required
 def view_timesheet(id):
     """
@@ -133,7 +133,7 @@ def view_timesheet(id):
                            timesheet=timesheet, title="View Timesheet")
 
 
-@employee.route('/timesheets/view/<int:id>/submit', methods=['GET', 'POST'])
+@employee.route('/timesheets/view/<int:id>/submit', methods=['GET', 'PUT'])
 @login_required
 def submit_timesheet(id):
     """
@@ -152,7 +152,7 @@ def submit_timesheet(id):
     return redirect(url_for('employee.list_timesheets'))
 
 
-@employee.route('/timesheets/edit/<int:id>', methods=['GET', 'POST'])
+@employee.route('/timesheets/edit/<int:id>', methods=['GET', 'PUT'])
 @login_required
 def edit_timesheet(id):
     """
@@ -201,7 +201,7 @@ def edit_timesheet(id):
                            form=form, title="Edit Timesheet")
 
 
-@employee.route('/timesheets/delete/<int:id>', methods=['GET', 'POST'])
+@employee.route('/timesheets/delete/<int:id>', methods=['GET', 'DELETE'])
 @login_required
 def delete_timesheet(id):
     """

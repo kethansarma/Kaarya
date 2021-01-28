@@ -39,7 +39,7 @@ def register():
     return render_template('admin/register.html', form=form, title='Register')
 
 
-@admin.route('/timesheets', methods=['GET', 'POST'])
+@admin.route('/timesheets', methods=['GET'])
 @login_required
 def list_timesheets():
     """
@@ -51,7 +51,7 @@ def list_timesheets():
                            timesheets=timesheets, title="Timesheets")
 
 
-@admin.route('/timesheets/view/<int:id>', methods=['GET', 'POST'])
+@admin.route('/timesheets/view/<int:id>', methods=['GET'])
 @login_required
 def view_timesheet(id):
     """
@@ -64,7 +64,7 @@ def view_timesheet(id):
                            timesheet=timesheet, title="View Timesheet")
 
 
-@admin.route('/timesheets/approval/<int:id>/<decision>', methods=['GET', 'POST'])
+@admin.route('/timesheets/approval/<int:id>/<decision>', methods=['GET', 'PUT'])
 @login_required
 def approve_timesheet(id, decision):
     """
@@ -82,7 +82,7 @@ def approve_timesheet(id, decision):
     return redirect(url_for('admin.list_timesheets'))
 
 
-@admin.route('/timesheets/approval/sheet/<int:id>/<decision>', methods=['GET', 'POST'])
+@admin.route('/timesheets/approval/sheet/<int:id>/<decision>', methods=['GET', 'PUT'])
 @login_required
 def approve_sheet(id, decision):
     """
@@ -101,7 +101,7 @@ def approve_sheet(id, decision):
     return redirect(url_for('admin.list_timesheets'))
 
 
-@admin.route('/timesheets/delete/<int:id>', methods=['GET', 'POST'])
+@admin.route('/timesheets/delete/<int:id>', methods=['GET', 'DELETE'])
 @login_required
 def delete_timesheet(id):
     """
@@ -118,7 +118,7 @@ def delete_timesheet(id):
     return redirect(url_for('admin.list_timesheets'))
 
 
-@admin.route('/departments', methods=['GET', 'POST'])
+@admin.route('/departments', methods=['GET'])
 @login_required
 def list_departments():
     """
@@ -160,7 +160,7 @@ def add_department():
                            title="Add Department")
 
 
-@admin.route('/departments/edit/<int:id>', methods=['GET', 'POST'])
+@admin.route('/departments/edit/<int:id>', methods=['GET', 'PUT'])
 @login_required
 def edit_department(id):
     """
@@ -188,7 +188,7 @@ def edit_department(id):
                            department=department, title="Edit Department")
 
 
-@admin.route('/departments/delete/<int:id>', methods=['GET', 'POST'])
+@admin.route('/departments/delete/<int:id>', methods=['GET', 'DELETE'])
 @login_required
 def delete_department(id):
     """
@@ -206,7 +206,7 @@ def delete_department(id):
 
 
 # Role Views
-@admin.route('/roles')
+@admin.route('/roles', methods=['GET'])
 @login_required
 def list_roles():
     check_admin()
@@ -250,7 +250,7 @@ def add_role():
                            form=form, title='Add Role')
 
 
-@admin.route('/roles/edit/<int:id>', methods=['GET', 'POST'])
+@admin.route('/roles/edit/<int:id>', methods=['GET', 'PUT'])
 @login_required
 def edit_role(id):
     """
@@ -278,7 +278,7 @@ def edit_role(id):
                            form=form, title="Edit Role")
 
 
-@admin.route('/roles/delete/<int:id>', methods=['GET', 'POST'])
+@admin.route('/roles/delete/<int:id>', methods=['GET', 'DELETE'])
 @login_required
 def delete_role(id):
     """
@@ -308,7 +308,7 @@ def list_employees():
                            employees=employees, title='Employees')
 
 
-@admin.route('/employee/assign/<int:id>', methods=['GET', 'POST'])
+@admin.route('/employee/assign/<int:id>', methods=['GET', 'PUT'])
 @login_required
 def assign_employee(id):
     """
