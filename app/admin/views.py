@@ -22,26 +22,25 @@ def register():
     check_admin()
     form = RegistrationForm()
     if form.validate_on_submit():
-        try:
-            exists = Employee.query.filter_by(email=form.email.data).first()
-            if exists:
-                flash("Email-Id already registered. Please Login")
-                return redirect(url_for("auth.login"))
-            else:
-                employee = Employee(email=form.email.data,
-                                    username=form.username.data,
-                                    first_name=form.first_name.data,
-                                    last_name=form.last_name.data,
-                                    password=form.password.data)
 
-                # add employee to the database
-                db.session.add(employee)
-                db.session.commit()
-                flash(f"Employee userId: {employee.username} registered")
-                # redirect to the login page
-                return redirect(url_for('admin.list_employees'))
-        except:
-            abort(500)
+        exists = Employee.query.filter_by(email=form.email.data).first()
+        if exists:
+            flash("Email-Id already registered. Please Login")
+            return redirect(url_for("auth.login"))
+        else:
+            employee = Employee(email=form.email.data,
+                                username=form.username.data,
+                                first_name=form.first_name.data,
+                                last_name=form.last_name.data,
+                                password=form.password.data)
+
+            # add employee to the database
+            db.session.add(employee)
+            db.session.commit()
+            flash(f"Employee userId: {employee.username} registered")
+            # redirect to the login page
+            return redirect(url_for('admin.list_employees'))
+
 
     # load registration template
     return render_template('admin/register.html', form=form, title='Register')
