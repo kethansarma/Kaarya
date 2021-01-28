@@ -152,7 +152,7 @@ def submit_timesheet(id):
     return redirect(url_for('employee.list_timesheets'))
 
 
-@employee.route('/timesheets/edit/<int:id>', methods=['GET', 'PUT'])
+@employee.route('/timesheets/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_timesheet(id):
     """

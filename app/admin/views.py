@@ -167,7 +167,7 @@ def add_department():
                            title="Add Department")
 
 
-@admin.route('/departments/edit/<int:id>', methods=['GET', 'PUT'])
+@admin.route('/departments/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_department(id):
     """
@@ -257,7 +257,7 @@ def add_role():
                            form=form, title='Add Role')
 
 
-@admin.route('/roles/edit/<int:id>', methods=['GET', 'PUT'])
+@admin.route('/roles/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_role(id):
     """
@@ -303,7 +303,7 @@ def delete_role(id):
 
 
 # Employee Views
-@admin.route('/employee')
+@admin.route('/employee',methods=['GET'])
 @login_required
 def list_employees():
     """
